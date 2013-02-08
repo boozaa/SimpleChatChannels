@@ -3,7 +3,6 @@ package me.odium.simplechatchannels.commands;
 import java.util.List;
 
 import me.odium.simplechatchannels.Loader;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -36,25 +35,25 @@ public class delowner implements CommandExecutor {
         Player target = plugin.getServer().getPlayer(args[1]);
         boolean ChanTemp = plugin.getStorageConfig().contains(ChanName);
         if(ChanTemp == false) {
-          plugin.NotExist(sender, ChanName);
+          sender.sendMessage(plugin.DARK_GREEN+"[SCC] "+plugin.RED + ChanName + plugin.DARK_GREEN + " does not exist");
           return true;
         } else {        
           if (!ChowList.contains(PlayerName)) {
-            sender.sendMessage(plugin.DARK_RED+"[SCC] "+plugin.GOLD + AddPlayName + plugin.DARK_RED + " does not have owner access to " + plugin.GOLD + ChanName);
+            sender.sendMessage(plugin.DARK_GREEN+"[SCC] "+plugin.GOLD + AddPlayName + plugin.DARK_GREEN + " is not an owner of " + plugin.RED + ChanName);
             return true;
           } else {
             ChowList.remove(PlayerName);  // remove the player from the list
             plugin.getStorageConfig().set(ChanName+".owner", ChowList); // set the new list          
             sender.sendMessage(plugin.DARK_GREEN+"[SCC] "+plugin.GOLD+ AddPlayName + plugin.DARK_GREEN + " removed From " + plugin.RED + ChanName + "'s" + plugin.DARK_GREEN + " owner list");
             if (target != null) {
-              target.sendMessage(plugin.DARK_GREEN+"[SCC] "+"You have been removed from " + plugin.GOLD + ChanName + "'s" + plugin.DARK_GREEN + " owner list");              
+              target.sendMessage(plugin.DARK_GREEN+"[SCC] "+"You have been removed from " + plugin.RED + ChanName + "'s" + plugin.DARK_GREEN + " owner list");              
             }
             plugin.saveStorageConfig();
             return true;
           }
         }
       } else {
-        plugin.NotOwner(sender, ChanName);
+        sender.sendMessage(plugin.DARK_GREEN+"[SCC] "+plugin.DARK_GREEN + "You are not an owner of " + plugin.RED + ChanName);
         return true;
       }
     }
